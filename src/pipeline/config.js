@@ -8,6 +8,7 @@ const FluentUIColorRamps = require("./fluentui-color-ramp")
 const FluentUIComputed = require("./fluentui-computed")
 require("./fluentui-shared")
 require("./fluentui-css")
+require("./fluentui-rn")
 require("./fluentui-html")
 require("./fluentui-ios")
 require("./fluentui-winui")
@@ -21,7 +22,7 @@ require("./fluentui-winui")
 
 	To see the pipeline merge multiple JSON files together, try adding "src/tokens/example-red-accent.json" to the array.
 */
-const inputTokenFiles = ["src/tokens/fluentui.json"]
+const inputTokenFiles = ["src/tokens/project-tokens.json"]
 
 /*
 	Specify the path to where output files should be generated, relative to the root of the repo.
@@ -33,7 +34,7 @@ const outputPath = "build"
 
 let tokens = {}
 inputTokenFiles.forEach((inputFile) => _.merge(tokens, jsonfile.readFileSync(inputFile)))
-tokens = FluentUIColorRamps.buildColorRamps(tokens)
+/*tokens = FluentUIColorRamps.buildColorRamps(tokens)*/
 tokens = FluentUIAliases.resolveAliases(tokens)
 tokens = FluentUIComputed.resolveComputedTokens(tokens)
 
@@ -67,7 +68,7 @@ module.exports = {
 
 		css: {
 			transformGroup: "fluentui/css",
-			buildPath: `${outputPath}/web/`,
+			buildPath: `D:/Projects/tokentest/src/`,
 			files: [{ destination: "fluentuitokens.css", format: "css/variables" }],
 		},
 
@@ -76,10 +77,16 @@ module.exports = {
 			buildPath: `${outputPath}/web/`,
 			files: [{ destination: "fluentuitokens-flat.css", format: "css/variables" }],
 		},
+		
+		rnflat: {
+			transformGroup: "fluentui/rnflat",
+			buildPath: `D:/Projects/rnwtest/`,
+			files: [{ destination: "theme.style.js", format: "fluentui/rn/res" }],
+		},
 
 		winui: {
 			transformGroup: "fluentui/winui",
-			buildPath: `${outputPath}/winui/`,
+			buildPath: `D:/projects/github/xamltokens/`,
 			files: [{ destination: "FluentUITokens.xaml", format: "fluentui/xaml/res" }],
 		},
 	},

@@ -6,11 +6,11 @@ const Utils = require("./utils")
 
 const getNameForCss = (path, prefix) =>
 	Utils.getModifiedPathForNaming(path, prefix)
-		.join("-")
-		.toLowerCase()
+		.join("")
+		.toLowerCase()		
 
 StyleDictionary.registerTransform({
-	name: "fluentui/name/kebab",
+	name: "fluentui/name/rnkebab",
 	type: "name",
 	transformer: (prop, options) => getNameForCss(prop.path, options.prefix),
 })
@@ -19,11 +19,11 @@ StyleDictionary.registerTransform({
 	name: "fluentui/alias/css",
 	type: "value",
 	matcher: (prop) => "resolvedAliasPath" in prop,
-	transformer: (prop, options) => `var(--${getNameForCss(prop.resolvedAliasPath.split("."), options.prefix)})`,
+	transformer: (prop, options) => `var(${getNameForCss(prop.resolvedAliasPath.split("."), options.prefix)})`,
 })
 
 StyleDictionary.registerTransform({
-	name: "fluentui/size/css",
+	name: "fluentui/size/rncss",
 	type: "value",
 	matcher: (prop) => prop.attributes.category === "size",
 	transformer: (prop, options) =>
@@ -45,9 +45,11 @@ StyleDictionary.registerTransform({
 		{
 			if (prop.attributes.xamlType === "CornerRadius")
 			{
-				prop.name = "global-corner-radius";
+				prop.name = "globalcornerradius";
 			}
-			return `${value}px`
+			
+			const MaxCornerRadius = 15
+			return (value > MaxCornerRadius) ? MaxCornerRadius.toString() : value.toString()
 		}
 		else if (Array.isArray(value) && value.length === 4)
 			return `${value[0]}px ${value[1]}px ${value[2]}px ${value[3]}px`
@@ -56,12 +58,40 @@ StyleDictionary.registerTransform({
 	},
 })
 
-StyleDictionary.registerTransformGroup({
-	name: "fluentui/css",
-	transforms: ["fluentui/attribute", "fluentui/name/kebab", "fluentui/alias/css", "time/seconds", "fluentui/size/css", "color/css"],
+StyleDictionary.registerTransform({
+	name: "fluentui/color/rn",
+	type: "value",
+	matcher: (prop) => prop.attributes.category === "color",
+	transformer: (prop, options) =>
+	{
+		const value = prop.value
+		return `'${value}'`
+	},
 })
 
+StyleDictionary.registerFormat({
+	name: "fluentui/rn/res",
+	formatter: (dictionary, config) =>
+	{
+		return `export default {
+${dictionary.allProperties.map((prop) =>
+	{
+		if (prop.attributes.aliasResourceName)
+		{
+			return `	<StaticResource x:Key="${prop.name}" ResourceKey="${prop.attributes.aliasResourceName}" />`
+		}
+		else
+		{
+			const xamlType = prop.attributes.xamlType || "x:String"
+			return `    ${prop.name}: ${Utils.escapeXml(prop.value)},`
+		}
+	}).join("\n")}
+};`
+	},
+})
+
+
 StyleDictionary.registerTransformGroup({
-	name: "fluentui/cssflat",
-	transforms: ["fluentui/attribute", "fluentui/name/kebab", "time/seconds", "fluentui/size/css", "color/css"],
+	name: "fluentui/rnflat",
+	transforms: ["fluentui/attribute", "fluentui/name/rnkebab", "time/seconds", "fluentui/size/rncss", "fluentui/color/rn"],
 })

@@ -118,7 +118,8 @@ StyleDictionary.registerTransform({
 				a new property to the platform to describe how to interpret CornerRadius, or (3) get the WinComp handoff visual and
 				adjust it using bindings.
 			*/
-			const MaxCornerRadius = 18
+			const MaxCornerRadius = 15
+			prop.name = "GlobalCornerRadius";
 			return (prop.attributes.xamlType === "CornerRadius" && value > MaxCornerRadius) ? MaxCornerRadius.toString() : value.toString()
 		}
 		else if (value.includes("/"))

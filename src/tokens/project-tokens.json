@@ -1,0 +1,21 @@
+{
+  "Global": {
+    "Color": {
+      "Accent": {
+        "value": "#5d5a9c"
+      },
+      "Neutral": {
+        "value": "#ffffff"
+      }
+    },
+    "ForegroundFills": {},
+    "StrokeFills": {},
+    "Corner": {
+      "Radius": {
+        "200": {
+          "value": 2
+        }
+      }
+    }
+  }
+}
