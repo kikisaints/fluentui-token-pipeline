@@ -1,19 +1,103 @@
 {
   "Global": {
     "Color": {
-      "Accent": {
-        "value": "#5d5a9c"
-      },
       "Neutral": {
-        "value": "#ffffff"
+        "87": {
+          "value": "#EDEDED"
+        },
+        "88": {
+          "value": "#EFEFEF"
+        },
+        "89": {
+          "value": "#F2F2F2"
+        },
+        "90": {
+          "value": "#F5F5F5"
+        },
+        "91": {
+          "value": "#F7F7F7"
+        }
+      },
+      "Accent": {
+        "100": {
+          "value": "#0078D4"
+        }
+      },
+      "SurfaceAlert": {
+        "Rest": {
+          "value": "#F01111"
+        }
       }
     },
     "ForegroundFills": {},
     "StrokeFills": {},
     "Corner": {
       "Radius": {
+        "100": {
+          "value": 0
+        },
         "200": {
           "value": 2
+        },
+        "300": {
+          "value": 4
+        },
+        "400": {
+          "value": 8
+        },
+        "500": {
+          "value": 12
+        },
+        "900": {
+          "value": 99999
+        }
+      }
+    }
+  },
+  "Set": {
+    "NeutralFillCard": {
+      "Fill": {
+        "Color": {
+          "Rest": {
+            "aliasOf": "Global.Color.Neutral.91"
+          }
+        }
+      }
+    },
+    "Primary": {
+      "Corner": {
+        "Radius": {
+          "aliasOf": "Global.Corner.Radius.300"
+        }
+      }
+    },
+    "Accent": {
+      "Fill": {
+        "Color": {
+          "Rest": {
+            "aliasOf": "Global.Color.Accent.100"
+          }
+        }
+      }
+    }
+  },
+  "AccentButton": {
+    "Root": {
+      "Fill": {
+        "Color": {
+          "aliasOf": "Set.Accent.Fill.Color"
+        }
+      },
+      "Corner": {
+        "Radius": {
+          "aliasOf": "Set.Primary.Corner"
+        }
+      }
+    },
+    "Button": {
+      "Fill": {
+        "Color": {
+          "aliasOf": "Set.NeutralFillCard.Fill.Color"
         }
       }
     }

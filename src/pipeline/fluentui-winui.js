@@ -119,7 +119,6 @@ StyleDictionary.registerTransform({
 				adjust it using bindings.
 			*/
 			const MaxCornerRadius = 15
-			prop.name = "GlobalCornerRadius";
 			return (prop.attributes.xamlType === "CornerRadius" && value > MaxCornerRadius) ? MaxCornerRadius.toString() : value.toString()
 		}
 		else if (value.includes("/"))

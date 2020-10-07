@@ -66,7 +66,7 @@ class FluentUIAliases
 		this._mergeProps(prop, target, prop.aliasOf, properties, this._mergePropsOptions)
 
 		// Return the resolved property to indicate that we successfully resolved the alias.
-		return target
+		return target;
 
 		// TODO: Allow users to perform math, such as "tokenZ = tokenX * tokenY - 1", or color manipulation.
 	}
@@ -98,6 +98,7 @@ class FluentUIAliases
 			{
 				// The alias target is another alias, so it's recursion time.
 				// target = { aliasOf: "targetoftarget" }
+				
 				this._resolveAlias(target, properties)
 			}
 			else if ("computed" in target)
@@ -140,7 +141,7 @@ class FluentUIAliases
 	/// Given a path string ("Global.Color.Blue") and a properties dictionary, returns the property at that path.
 	/// Returns null if the target can't be found.
 	findPropByPath(path, properties)
-	{
+	{		
 		const targetPathParts = path.trim().split(".")
 		if (targetPathParts.length === 0) return null
 

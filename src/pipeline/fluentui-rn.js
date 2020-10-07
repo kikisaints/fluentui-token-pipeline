@@ -16,10 +16,18 @@ StyleDictionary.registerTransform({
 })
 
 StyleDictionary.registerTransform({
-	name: "fluentui/alias/css",
+	name: "fluentui/rnalias/css",
 	type: "value",
 	matcher: (prop) => "resolvedAliasPath" in prop,
-	transformer: (prop, options) => `var(${getNameForCss(prop.resolvedAliasPath.split("."), options.prefix)})`,
+	transformer: (prop, options) => 
+	{
+		const value = prop.value
+		if (typeof value === "number")
+		{
+			return value;
+		}
+		return `"${prop.value}"`;
+	},
 })
 
 StyleDictionary.registerTransform({
@@ -43,11 +51,6 @@ StyleDictionary.registerTransform({
 		const value = prop.value
 		if (typeof value === "number")
 		{
-			if (prop.attributes.xamlType === "CornerRadius")
-			{
-				prop.name = "globalcornerradius";
-			}
-			
 			const MaxCornerRadius = 15
 			return (value > MaxCornerRadius) ? MaxCornerRadius.toString() : value.toString()
 		}
@@ -93,5 +96,5 @@ ${dictionary.allProperties.map((prop) =>
 
 StyleDictionary.registerTransformGroup({
 	name: "fluentui/rnflat",
-	transforms: ["fluentui/attribute", "fluentui/name/rnkebab", "time/seconds", "fluentui/size/rncss", "fluentui/color/rn"],
+	transforms: ["fluentui/attribute", "fluentui/name/rnkebab", "time/seconds", "fluentui/rnalias/css", "fluentui/size/rncss", "fluentui/color/rn"],
 })

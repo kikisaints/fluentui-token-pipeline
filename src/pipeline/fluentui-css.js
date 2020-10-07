@@ -12,7 +12,10 @@ const getNameForCss = (path, prefix) =>
 StyleDictionary.registerTransform({
 	name: "fluentui/name/kebab",
 	type: "name",
-	transformer: (prop, options) => getNameForCss(prop.path, options.prefix),
+	transformer: (prop, options) => 
+	{
+		return getNameForCss(prop.path, options.prefix);
+	},
 })
 
 StyleDictionary.registerTransform({
@@ -43,10 +46,6 @@ StyleDictionary.registerTransform({
 		const value = prop.value
 		if (typeof value === "number")
 		{
-			if (prop.attributes.xamlType === "CornerRadius")
-			{
-				prop.name = "global-corner-radius";
-			}
 			return `${value}px`
 		}
 		else if (Array.isArray(value) && value.length === 4)
